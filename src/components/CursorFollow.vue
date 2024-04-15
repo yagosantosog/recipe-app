@@ -21,11 +21,6 @@ const base = {
     '100%': {
       transform: 'scale(0.8) translate(-50%, -50%)'
     }
-  },
-  '@media only screen and (max-width: 700px)': {
-    '#cursor': {
-      display: 'none'
-    }
   }
 }
 
@@ -54,33 +49,49 @@ onUnmounted(() => {
   document.removeEventListener('mousemove', updateCursorPosition)
 })
 
-const cursorStyles = computed(() => ({
-  ...base,
-  animation: pulse.value ? 'pulse 2s infinite' : null,
-  backgroundColor: hollow.value ? 'transparent' : color.value,
-  border: hollow.value ? '1px solid ' + color.value : null,
-  opacity: opacity.value,
-  width: size.value + 'rem',
-  height: size.value + 'rem',
-  top: y.value + 'px',
-  left: x.value + 'px',
-  transitionTimingFunction: easing.value,
-  transitionDuration: duration.value + 's'
-}))
+const cursorStyles = computed(() => {
+  const styles = {
+    ...base,
+    animation: pulse.value ? 'pulse 2s infinite' : null,
+    backgroundColor: hollow.value ? 'transparent' : color.value,
+    border: hollow.value ? '1px solid ' + color.value : null,
+    opacity: opacity.value,
+    width: size.value + 'rem',
+    height: size.value + 'rem',
+    top: y.value + 'px',
+    left: x.value + 'px',
+    transitionTimingFunction: easing.value,
+    transitionDuration: duration.value + 's'
+  }
 
-const secondCursorStyles = computed(() => ({
-  ...base,
-  animation: pulse.value ? 'pulse 2s infinite' : null,
-  backgroundColor: hollow.value ? 'transparent' : color.value,
-  border: hollow.value ? '1px solid ' + color.value : null,
-  opacity: opacity.value,
-  width: size.value / 2 + 'rem',
-  height: size.value / 2 + 'rem',
-  top: y.value + 'px',
-  left: x.value + 'px',
-  transitionTimingFunction: easing.value,
-  transitionDuration: duration.value * 1.8 + 's'
-}))
+  if (window.innerWidth <= 700) {
+    styles.display = 'none'
+  }
+
+  return styles
+})
+
+const secondCursorStyles = computed(() => {
+  const styles = {
+    ...base,
+    animation: pulse.value ? 'pulse 2s infinite' : null,
+    backgroundColor: hollow.value ? 'transparent' : color.value,
+    border: hollow.value ? '1px solid ' + color.value : null,
+    opacity: opacity.value,
+    width: size.value / 2 + 'rem',
+    height: size.value / 2 + 'rem',
+    top: y.value + 'px',
+    left: x.value + 'px',
+    transitionTimingFunction: easing.value,
+    transitionDuration: duration.value * 1.8 + 's'
+  }
+
+  if (window.innerWidth <= 700) {
+    styles.display = 'none'
+  }
+
+  return styles
+})
 </script>
 
 <template>
