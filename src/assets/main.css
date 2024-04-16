@@ -51,14 +51,15 @@ video {
 }
 
 :root {
-  --bg-light: 132 100% 99%;
+  --bg-light: 0 0% 90%;
+  --bg-dark: 0 0% 0%;
 
   --main-clr: 85 38% 53%;
 
   --text-dark: 0 0% 0%;
   --text-light: 0 0% 100%;
 
-  --shadow-clr: 0 0% 78%;
+  --shadow-clr: 136 35% 39% / 0.3;
 
   --step--1: clamp(0.8333rem, 0.7058rem + 0.6377vi, 1.2rem);
   --step-0: clamp(1rem, 0.8261rem + 0.8696vi, 1.5rem);

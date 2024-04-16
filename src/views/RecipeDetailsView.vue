@@ -6,6 +6,7 @@ import YoutubeButton from '@/components/YoutubeButton.vue'
 const route = useRoute()
 const data = ref(null)
 const strArea = ref(false)
+const strInstructions = ref('')
 
 const fetchData = async () => {
   try {
@@ -17,6 +18,7 @@ const fetchData = async () => {
     }
     const responseData = await response.json()
     data.value = responseData.meals[0]
+    strInstructions.value = formatInstructions(data.value.strInstructions)
     if (responseData.meals[0].strArea !== 0) {
       strArea.value = true
     }
@@ -28,6 +30,32 @@ const fetchData = async () => {
 onMounted(() => {
   fetchData()
 })
+
+function formatInstructions(instructions) {
+  const groupedParts = []
+  let parts
+
+  if (/\d+\.\s/.test(instructions)) {
+    parts = instructions.split(/(?=\b\d+\.\s)/)
+    for (let i = 0; i < parts.length; i++) {
+      if (i > 0) {
+        groupedParts.push('</p><p>' + parts[i])
+      } else {
+        groupedParts.push(parts[i])
+      }
+    }
+  } else {
+    parts = instructions.split('.')
+    for (let i = 0; i < parts.length; i++) {
+      if (i > 0 && i % 4 === 0) {
+        groupedParts.push('</p><p>' + parts[i])
+      } else {
+        groupedParts.push(parts[i])
+      }
+    }
+  }
+  return '<p>' + groupedParts.join('.') + '</p>'
+}
 </script>
 
 <template>
@@ -40,7 +68,7 @@ onMounted(() => {
 
       <img :src="data.strMealThumb" alt="recipe" />
       <h2>Preparation Method</h2>
-      <p>{{ data.strInstructions }}</p>
+      <div class="recipeDetails__instructions" v-html="strInstructions"></div>
       <p v-if="strArea">Area: {{ data.strArea }}</p>
       <ul>
         <h2>Ingredients</h2>
@@ -72,8 +100,8 @@ onMounted(() => {
   margin: 0;
 }
 
-p {
-  text-align: justify;
+.recipeDetails__instructions {
+  max-width: 100%;
 }
 
 ul {
@@ -87,15 +115,18 @@ li {
 img {
   max-width: 100%;
   border-radius: 0.2rem;
-  margin-right: 2rem;
   margin-bottom: 2rem;
 }
 
 @media (min-width: 85rem) {
   img {
     max-width: 25rem;
-    margin-bottom: 0;
+    margin-right: 2rem;
     float: left;
+  }
+
+  .recipeDetails__instructions {
+    text-align: justify;
   }
 }
 </style>

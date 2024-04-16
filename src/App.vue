@@ -7,9 +7,11 @@ const router = useRouter()
 
 <template>
   <CursorFollow />
-  <header class="container">
-    <div @click="router.push('/')" class="logo">
-      <img src="./assets/logo.webp" alt="logo" />
+  <header>
+    <div class="header__container container">
+      <div @click="router.push('/')" class="logo">
+        <img src="./assets/logo.webp" alt="logo" />
+      </div>
     </div>
   </header>
   <div class="container">
@@ -19,7 +21,9 @@ const router = useRouter()
 
 <style scoped>
 header {
-  border-bottom: 2px solid hsl(var(--shadow-clr));
+  background-color: hsl(var(--bg-dark));
+}
+.header__container {
 }
 
 .logo {
