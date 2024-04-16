@@ -51,8 +51,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
-header {
-  padding: 0;
+main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 2rem;
 }
 
 button {
@@ -76,17 +79,6 @@ button:hover {
 .cta {
   max-width: 70ch;
   margin-inline: auto;
-}
-
-@media (min-width: 85rem) {
-  main {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-  }
-
-  .cta {
-    padding: 2rem;
-  }
+  padding: 2em;
 }
 </style>

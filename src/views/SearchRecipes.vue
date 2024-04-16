@@ -92,7 +92,7 @@ watch(selectedCategory, () => {
   <main>
     <div class="searchRecipes__container">
       <div class="searchRecipes__container-inputs">
-        <input v-model="meal" placeholder="Search for Recipes" />
+        <input v-model.trim="meal" placeholder="Search for Recipes" />
         <label for="categories">Search By Category: </label>
         <select id="categories" v-model="selectedCategory" v-if="categories">
           <option

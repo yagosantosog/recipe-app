@@ -9,7 +9,7 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue')
     },
     {
-      path: '/recipeDetails/:id?',
+      path: '/recipeDetails/:id',
       name: 'recipeDetails',
       component: () => import('../views/RecipeDetailsView.vue')
     },
@@ -17,6 +17,11 @@ const router = createRouter({
       path: '/searchRecipes',
       name: 'searchRecipes',
       component: () => import('../views/SearchRecipes.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'pageNotFound',
+      component: () => import('../views/PageNotFoundView.vue')
     }
   ]
 })

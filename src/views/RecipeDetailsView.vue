@@ -85,7 +85,7 @@ li {
 }
 
 img {
-  max-width: 12rem;
+  max-width: 100%;
   border-radius: 0.2rem;
   margin-right: 2rem;
   margin-bottom: 2rem;
