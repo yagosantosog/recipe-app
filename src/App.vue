@@ -1,12 +1,10 @@
 <script setup>
 import { RouterView, useRouter } from 'vue-router'
-import CursorFollow from './components/CursorFollow.vue'
 
 const router = useRouter()
 </script>
 
 <template>
-  <CursorFollow />
   <header>
     <div class="header__container container">
       <div @click="router.push('/')" class="logo">
@@ -22,8 +20,6 @@ const router = useRouter()
 <style scoped>
 header {
   background-color: hsl(var(--bg-dark));
-}
-.header__container {
 }
 
 .logo {

@@ -21,7 +21,7 @@ const isLongTitle = computed(() => {
 <template>
   <div class="recipeCard">
     <div class="recipeCard__title">
-      <h2>
+      <h2 :title="title">
         {{ !isLongTitle ? title : `${title.split(' ').slice(0, 4).join(' ')}...` }}
       </h2>
       <div class="recipeCard__buttons">
