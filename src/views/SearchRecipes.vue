@@ -1,90 +1,69 @@
 <script setup>
+import { ref, onMounted, watch } from 'vue'
 import MealCard from '@/components/recipe/MealCard.vue'
-import { onMounted, ref, watch } from 'vue'
 
-const meal = ref('')
-const data = ref('')
-const categories = ref('')
+const search = ref('')
+const meals = ref([])
+const categories = ref([])
 const selectedCategory = ref('')
 
-const fetchData = () => {
-  fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${meal.value}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP Error! Status ${response.status}`)
-      }
-      return response.json()
-    })
-    .then((responseData) => {
-      data.value = responseData.meals
-    })
-    .catch((error) => {
-      console.error(`Error fetching data: ${error}`)
-    })
+const isLoading = ref(false)
+const error = ref(null)
+
+const BASE_URL = 'https://www.themealdb.com/api/json/v1/1'
+
+async function fetchMeals(endpoint) {
+  try {
+    isLoading.value = true
+    error.value = null
+
+    const response = await fetch(`${BASE_URL}/${endpoint}`)
+    if (!response.ok) {
+      throw new Error(`HTTP Error: ${response.status}`)
+    }
+
+    const result = await response.json()
+    meals.value = result.meals ?? []
+  } catch (err) {
+    error.value = err.message
+    meals.value = []
+  } finally {
+    isLoading.value = false
+  }
 }
 
-const fetchRandomData = () => {
-  const letters = 'l,p,m,f,s,k,t,b'
-  const lettersArray = letters.split(',')
-  const randomLetter = lettersArray[Math.floor(Math.random() * lettersArray.length)]
-  fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${randomLetter}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP Error! Status ${response.status}`)
-      }
-      return response.json()
-    })
-    .then((responseData) => {
-      data.value = responseData.meals
-    })
-    .catch((error) => {
-      console.error(`Error fetching data: ${error}`)
-    })
+async function fetchCategories() {
+  try {
+    const response = await fetch(`${BASE_URL}/categories.php`)
+    const result = await response.json()
+    categories.value = result.categories
+  } catch (err) {
+    console.error(err)
+  }
 }
 
-const fetchCategories = () => {
-  fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP Error! Status ${response.status}`)
-      }
-      return response.json()
-    })
-    .then((responseData) => {
-      categories.value = responseData.categories
-    })
-    .catch((error) => {
-      console.error(`Error fetching data: ${error}`)
-    })
-}
-
-const fetchSelectedCategory = () => {
-  fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory.value}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP Error! Status ${response.status}`)
-      }
-      return response.json()
-    })
-    .then((responseData) => {
-      data.value = responseData.meals
-    })
-    .catch((error) => {
-      console.error(`Error fetching data: ${error}`)
-    })
+function fetchRandomMeals() {
+  const letters = ['l', 'p', 'm', 'f', 's', 'k', 't', 'b']
+  const randomLetter = letters[Math.floor(Math.random() * letters.length)]
+  fetchMeals(`search.php?f=${randomLetter}`)
 }
 
 onMounted(() => {
-  fetchRandomData()
+  fetchRandomMeals()
   fetchCategories()
 })
 
-watch(meal, () => {
-  fetchData()
+watch(search, (value) => {
+  if (!value) {
+    fetchRandomMeals()
+    return
+  }
+  fetchMeals(`search.php?s=${value}`)
 })
 
-watch(selectedCategory, () => {
-  fetchSelectedCategory()
+watch(selectedCategory, (value) => {
+  if (!value) return
+  fetchMeals(`filter.php?c=${value}`)
 })
 </script>
 
@@ -92,32 +71,42 @@ watch(selectedCategory, () => {
   <main>
     <div class="searchRecipes__container">
       <div class="searchRecipes__container-inputs">
-        <input v-model.trim="meal" placeholder="Search for Recipes" />
-        <label for="categories">Search By Category: </label>
-        <select id="categories" v-model="selectedCategory" v-if="categories">
+        <input v-model.trim="search" placeholder="Search for recipes" />
+
+        <label for="categories">Search by category:</label>
+
+        <select id="categories" v-model="selectedCategory">
+          <option value="">All</option>
           <option
-            :value="category.strCategory"
             v-for="category in categories"
             :key="category.idCategory"
+            :value="category.strCategory"
           >
             {{ category.strCategory }}
           </option>
         </select>
       </div>
-      <div v-if="data === null" class="searchRecipes__loading">
-        <h2>Recipe Not Found</h2>
-      </div>
-      <div v-else-if="data === ''" class="searchRecipes__loading">
+
+      <div v-if="isLoading" class="searchRecipes__loading">
         <h2>Loading...</h2>
       </div>
-      <div v-else-if="data" class="searchRecipes__grid">
+
+      <div v-else-if="error" class="searchRecipes__loading">
+        <h2>Something went wrong</h2>
+      </div>
+
+      <div v-else-if="!meals.length" class="searchRecipes__loading">
+        <h2>No recipes found</h2>
+      </div>
+
+      <div v-else class="searchRecipes__grid">
         <MealCard
-          v-for="recipe in data"
+          v-for="recipe in meals"
+          :key="recipe.idMeal"
           :id="recipe.idMeal"
           :title="recipe.strMeal"
           :image="recipe.strMealThumb"
           :ytLink="recipe.strYoutube"
-          :key="recipe.idMeal"
         />
       </div>
     </div>
