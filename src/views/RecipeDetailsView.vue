@@ -1,80 +1,43 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue'
+import { getMealById } from '@/services/mealService'
+import { formatInstructions } from '@/utils/formatInstructions'
 import YoutubeButton from '@/components/YoutubeButton.vue'
 
 const route = useRoute()
-const data = ref(null)
-const strArea = ref(false)
-const strInstructions = ref('')
+const meal = ref(null)
+const instructions = ref('')
+const hasArea = ref(false)
 
-const fetchData = async () => {
+onMounted(async () => {
   try {
-    const response = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${route.params.id}`
-    )
-    if (!response.ok) {
-      throw new Error(`HTTP Error! Status ${response.status}`)
-    }
-    const responseData = await response.json()
-    data.value = responseData.meals[0]
-    strInstructions.value = formatInstructions(data.value.strInstructions)
-    if (responseData.meals[0].strArea !== 0) {
-      strArea.value = true
-    }
+    meal.value = await getMealById(route.params.id)
+    instructions.value = formatInstructions(meal.value?.strInstructions)
+    hasArea.value = Boolean(meal.value?.strArea)
   } catch (error) {
-    console.error(`Error fetching data: ${error}`)
+    console.error(error)
   }
-}
-
-onMounted(() => {
-  fetchData()
 })
-
-function formatInstructions(instructions) {
-  const groupedParts = []
-  let parts
-
-  if (/\d+\.\s/.test(instructions)) {
-    parts = instructions.split(/(?=\b\d+\.\s)/)
-    for (let i = 0; i < parts.length; i++) {
-      if (i > 0) {
-        groupedParts.push('</p><p>' + parts[i])
-      } else {
-        groupedParts.push(parts[i])
-      }
-    }
-  } else {
-    parts = instructions.split('.')
-    for (let i = 0; i < parts.length; i++) {
-      if (i > 0 && i % 4 === 0) {
-        groupedParts.push('</p><p>' + parts[i])
-      } else {
-        groupedParts.push(parts[i])
-      }
-    }
-  }
-  return '<p>' + groupedParts.join('.') + '</p>'
-}
 </script>
 
 <template>
-  <main v-if="data">
+  <main v-if="meal">
     <div class="container">
       <div class="recipeDetails__header">
-        <h1>{{ data.strMeal }}</h1>
-        <YoutubeButton :ytLink="data.strYoutube" />
+        <h1>{{ meal.strMeal }}</h1>
+        <YoutubeButton :ytLink="meal.strYoutube" />
       </div>
 
-      <img :src="data.strMealThumb" alt="recipe" />
+      <img :src="meal.strMealThumb" alt="recipe" />
       <h2>Preparation Method</h2>
       <div class="recipeDetails__instructions" v-html="strInstructions"></div>
-      <p v-if="strArea">Area: {{ data.strArea }}</p>
+      <p v-if="strArea">Area: {{ meal.strArea }}</p>
       <ul>
         <h2>Ingredients</h2>
         <template v-for="(i, index) of new Array(20)">
-          <li v-if="data[`strIngredient${index}`]" :key="index">
-            {{ index + '. ' + data[`strIngredient${index}`] }}
+          <li v-if="meal[`strIngredient${index}`]" :key="index">
+            {{ index + '. ' + meal[`strIngredient${index}`] }}
           </li>
         </template>
       </ul>

@@ -1,5 +1,5 @@
 <script setup>
-import MealCard from '@/components/MealCard.vue'
+import MealCard from '@/components/recipe/MealCard.vue'
 import { onMounted, ref, watch } from 'vue'
 
 const meal = ref('')

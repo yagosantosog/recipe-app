@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import YoutubeButton from './YoutubeButton.vue'
+import YoutubeButton from '@/components/ui/YoutubeButton.vue'
 import { computed } from 'vue'
 
 const router = useRouter()

@@ -1,5 +1,5 @@
 <script setup>
-import MealCard from '@/components/MealCard.vue'
+import MealCard from '@/components/recipe/MealCard.vue'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
