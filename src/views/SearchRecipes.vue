@@ -86,30 +86,11 @@ watch(selectedCategory, (value) => {
 </template>
 
 <style scoped>
-.searchRecipes__loading {
-  margin-top: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-input {
-  padding: 0.5em;
-  font-size: var(--step--1);
-  width: 100%;
-  border-radius: 10rem;
-  border: 1px solid hsl(var(--main-clr) / 0.8);
-}
-
-input:focus {
-  outline-color: hsl(var(--main-clr));
-}
-
 .searchRecipes__container {
   width: 90%;
-  max-width: 85rem;
+  max-width: 90rem;
   margin-inline: auto;
-  padding-block: 1rem;
+  padding: 2rem 0 3rem;
 }
 
 .searchRecipes__container-inputs {
@@ -118,28 +99,61 @@ input:focus {
   gap: 1rem;
   align-items: center;
   justify-content: center;
+  margin-bottom: 2.5rem;
 }
 
 .searchRecipes__container-inputs label {
   font-size: var(--step--1);
+  opacity: 0.85;
 }
 
-.searchRecipes__container-inputs select {
-  border-radius: 10rem;
-  padding: 0.2em;
-  border: 1px solid hsl(var(--main-clr) / 0.8);
+input,
+select {
+  width: 100%;
+  max-width: 22rem;
+  padding: 0.65em 1em;
   font-size: var(--step--1);
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--main-clr) / 0.25);
+  background-color: hsl(var(--bg-clr, 0 0% 100%));
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.searchRecipes__container-inputs select:focus {
-  outline-color: hsl(var(--main-clr));
+input::placeholder {
+  opacity: 0.6;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: hsl(var(--main-clr));
+  box-shadow: 0 0 0 3px hsl(var(--main-clr) / 0.15);
+}
+
+select {
+  cursor: pointer;
+}
+
+.searchRecipes__loading {
+  margin-top: 25vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.searchRecipes__loading h2 {
+  font-size: var(--step-1);
+  font-weight: 500;
+  opacity: 0.75;
 }
 
 .searchRecipes__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  align-items: center;
-  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2.5rem;
+  align-items: stretch;
 }
 </style>
