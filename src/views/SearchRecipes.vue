@@ -1,52 +1,21 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import MealCard from '@/components/recipe/MealCard.vue'
+import { useMeals } from '@/composables/useMeals'
 
 const search = ref('')
-const meals = ref([])
-const categories = ref([])
 const selectedCategory = ref('')
 
-const isLoading = ref(false)
-const error = ref(null)
-
-const BASE_URL = 'https://www.themealdb.com/api/json/v1/1'
-
-async function fetchMeals(endpoint) {
-  try {
-    isLoading.value = true
-    error.value = null
-
-    const response = await fetch(`${BASE_URL}/${endpoint}`)
-    if (!response.ok) {
-      throw new Error(`HTTP Error: ${response.status}`)
-    }
-
-    const result = await response.json()
-    meals.value = result.meals ?? []
-  } catch (err) {
-    error.value = err.message
-    meals.value = []
-  } finally {
-    isLoading.value = false
-  }
-}
-
-async function fetchCategories() {
-  try {
-    const response = await fetch(`${BASE_URL}/categories.php`)
-    const result = await response.json()
-    categories.value = result.categories
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-function fetchRandomMeals() {
-  const letters = ['l', 'p', 'm', 'f', 's', 'k', 't', 'b']
-  const randomLetter = letters[Math.floor(Math.random() * letters.length)]
-  fetchMeals(`search.php?f=${randomLetter}`)
-}
+const {
+  meals,
+  categories,
+  loading,
+  error,
+  searchMealsByName,
+  fetchMealsByCategory,
+  fetchRandomMeals,
+  fetchCategories
+} = useMeals()
 
 onMounted(() => {
   fetchRandomMeals()
@@ -58,12 +27,15 @@ watch(search, (value) => {
     fetchRandomMeals()
     return
   }
-  fetchMeals(`search.php?s=${value}`)
+  searchMealsByName(value)
 })
 
 watch(selectedCategory, (value) => {
-  if (!value) return
-  fetchMeals(`filter.php?c=${value}`)
+  if (!value) {
+    fetchRandomMeals()
+    return
+  }
+  fetchMealsByCategory(value)
 })
 </script>
 
@@ -87,7 +59,7 @@ watch(selectedCategory, (value) => {
         </select>
       </div>
 
-      <div v-if="isLoading" class="searchRecipes__loading">
+      <div v-if="loading" class="searchRecipes__loading">
         <h2>Loading...</h2>
       </div>
 
