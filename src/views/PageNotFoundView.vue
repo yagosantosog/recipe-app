@@ -4,8 +4,10 @@ const router = useRouter()
 </script>
 
 <template>
-  <h1>Page not Found</h1>
-  <button @click="router.back()">Go Back</button>
+  <div class="container">
+    <h1>Page not Found</h1>
+    <button @click="router.back()">Go Back</button>
+  </div>
 </template>
 
 <style scoped>

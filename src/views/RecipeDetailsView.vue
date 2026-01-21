@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { getMealById } from '@/services/mealService'
 import { formatInstructions } from '@/utils/formatInstructions'
-import YoutubeButton from '@/components/YoutubeButton.vue'
+import YoutubeButton from '@/components/ui/YoutubeButton.vue'
 
 const route = useRoute()
 const meal = ref(null)

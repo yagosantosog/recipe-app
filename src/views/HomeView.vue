@@ -31,23 +31,25 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="searchRecipes__loading" v-if="data === null">
-    <h2>Loading...</h2>
-  </div>
-  <main v-else-if="data">
-    <MealCard
-      :id="data.idMeal"
-      :title="data.strMeal"
-      :image="data.strMealThumb"
-      :ytLink="data.strYoutube"
-    />
-    <div class="cta">
-      <h1>Looking for a delicious recipe?</h1>
-      <p>Discover new recipes right now! Search by recipes and find amazing dishes to try out.</p>
-      <p>Unleash your culinary creativity and be amazed by what you can cook today!</p>
-      <button @click="router.push('/searchRecipes')">Start Exploring!</button>
+  <div class="container">
+    <div class="searchRecipes__loading" v-if="data === null">
+      <h2>Loading...</h2>
     </div>
-  </main>
+    <main v-else-if="data">
+      <MealCard
+        :id="data.idMeal"
+        :title="data.strMeal"
+        :image="data.strMealThumb"
+        :ytLink="data.strYoutube"
+      />
+      <div class="cta">
+        <h1>Looking for a delicious recipe?</h1>
+        <p>Discover new recipes right now! Search by recipes and find amazing dishes to try out.</p>
+        <p>Unleash your culinary creativity and be amazed by what you can cook today!</p>
+        <button @click="router.push('/searchRecipes')">Start Exploring!</button>
+      </div>
+    </main>
+  </div>
 </template>
 
 <style scoped>
