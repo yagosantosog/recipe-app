@@ -63,6 +63,7 @@ h2 {
 }
 
 i {
+  cursor: pointer;
   font-size: var(--step-2);
   transition:
     transform 0.4s,
