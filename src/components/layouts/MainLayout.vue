@@ -14,6 +14,6 @@ const router = useRouter()
 </template>
 <style scoped>
 img {
-  max-width: 10vw;
+  width: clamp(100px, calc(10vw + 0.5rem), 500px);
 }
 </style>
