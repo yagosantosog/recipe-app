@@ -31,7 +31,7 @@ onMounted(async () => {
 
       <img :src="meal.strMealThumb" alt="recipe" />
       <h2>Preparation Method</h2>
-      <div class="recipeDetails__instructions" v-html="strInstructions"></div>
+      <div class="recipeDetails__instructions" v-html="instructions"></div>
       <p v-if="strArea">Area: {{ meal.strArea }}</p>
       <ul>
         <h2>Ingredients</h2>
@@ -55,7 +55,7 @@ onMounted(async () => {
   align-items: center;
   margin-bottom: 2rem;
   padding: 1em;
-  border-radius: 2rem;
+  border-radius: 5px;
 }
 
 .recipeDetails__header h1 {
@@ -63,7 +63,7 @@ onMounted(async () => {
   margin: 0;
 }
 
-.recipeDetails__instructions {
+.recipeDetails__instructions :deep(p) {
   max-width: 100%;
 }
 
@@ -77,11 +77,11 @@ li {
 
 img {
   max-width: 100%;
-  border-radius: 0.2rem;
+  border-radius: 5px;
   margin-bottom: 2rem;
 }
 
-@media (min-width: 85rem) {
+@media (min-width: 50rem) {
   img {
     max-width: 25rem;
     margin-right: 2rem;
