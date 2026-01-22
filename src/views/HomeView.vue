@@ -55,10 +55,9 @@ onMounted(() => {
 <style scoped>
 main {
   display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
-  min-height: 80svh;
-  flex-wrap: wrap;
   column-gap: 2rem;
 }
 
@@ -66,17 +65,19 @@ button {
   font-size: var(--step-0);
   background-color: hsl(var(--main-clr));
   padding: 0.5em 1em;
-  border-radius: 10rem;
+  border-radius: 5px;
   color: hsl(var(--text-light));
   border: none;
   transition:
     transform 0.4s,
+    brightness 0.4s,
     box-shadow 0.4s;
   box-shadow: 0.2rem 0.2rem 0.5rem hsl(var(--shadow-clr));
 }
 
 button:hover {
-  transform: scale(1.08);
+  filter: brightness(95%);
+  transform: scale(1.05);
   box-shadow: 0.3rem 0.3rem 0.5rem hsl(var(--shadow-clr));
 }
 
@@ -84,5 +85,11 @@ button:hover {
   max-width: 70ch;
   margin-inline: auto;
   padding: 2em;
+}
+
+@media (min-width: 720px) {
+  main {
+    flex-direction: row;
+  }
 }
 </style>
