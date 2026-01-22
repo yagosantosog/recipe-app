@@ -22,25 +22,37 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main v-if="meal">
-    <div class="container">
-      <div class="recipeDetails__header">
-        <h1>{{ meal.strMeal }}</h1>
-        <YoutubeButton :ytLink="meal.strYoutube" />
-      </div>
-
-      <img :src="meal.strMealThumb" alt="recipe" />
-      <h2>Preparation Method</h2>
-      <div class="recipeDetails__instructions" v-html="instructions"></div>
-      <p v-if="strArea">Area: {{ meal.strArea }}</p>
-      <ul>
-        <h2>Ingredients</h2>
-        <template v-for="(i, index) of new Array(20)">
-          <li v-if="meal[`strIngredient${index}`]" :key="index">
-            {{ index + '. ' + meal[`strIngredient${index}`] }}
-          </li>
-        </template>
-      </ul>
+  <main class="container" v-if="meal">
+    <section class="recipeDetails__header">
+      <h1>{{ meal.strMeal }}</h1>
+      <YoutubeButton v-if="meal.strYoutube" :ytLink="meal.strYoutube" />
+    </section>
+    <div class="recibeDetails_content">
+      <section v-if="meal.strYoutube" class="recipeDetails__video">
+        <iframe
+          :src="meal.strYoutube.replace('watch?v=', 'embed/')"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </section>
+      <section class="recipeDetails__preparation">
+        <h2>Preparation Method</h2>
+        <div class="recipeDetails__instructions" v-html="instructions"></div>
+        <p v-if="hasArea">Area: {{ meal.strArea }}</p>
+      </section>
+      <section class="recipeDetails__ingredients">
+        <ul>
+          <h2>Ingredients</h2>
+          <template v-for="(i, index) of new Array(20)">
+            <li v-if="meal[`strIngredient${index}`]" :key="index">
+              {{ index + '. ' + meal[`strIngredient${index}`] }}
+            </li>
+          </template>
+        </ul>
+      </section>
     </div>
   </main>
 </template>
@@ -63,8 +75,24 @@ onMounted(async () => {
   margin: 0;
 }
 
-.recipeDetails__instructions :deep(p) {
+.recibeDetails_content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.recipeDetails__video {
+  width: 100%;
+}
+
+.recipeDetails__video iframe {
+  width: 70ch;
+  font-size: var(--step--1);
   max-width: 100%;
+  aspect-ratio: 16/9;
+  height: auto;
+  border-radius: 5px;
 }
 
 ul {
@@ -75,19 +103,7 @@ li {
   font-size: var(--step--1);
 }
 
-img {
-  max-width: 100%;
-  border-radius: 5px;
-  margin-bottom: 2rem;
-}
-
 @media (min-width: 50rem) {
-  img {
-    max-width: 25rem;
-    margin-right: 2rem;
-    float: left;
-  }
-
   .recipeDetails__instructions {
     text-align: justify;
   }
