@@ -105,25 +105,18 @@ export function useMeals() {
       'f',
       'g',
       'h',
-      'i',
       'j',
       'k',
       'l',
       'm',
       'n',
-      'o',
       'p',
-      'q',
       'r',
       's',
       't',
-      'u',
       'v',
-      'w',
-      'x',
-      'y',
-      'z'
-    ][Math.floor(Math.random() * 26)]
+      'w'
+    ][Math.floor(Math.random() * 19)]
     fetchMeals(`search.php?f=${randomLetter}`, `meals_random_${randomLetter}`, 1000 * 60 * 60)
   }
 
