@@ -47,6 +47,8 @@ const isLongTitle = computed(() => {
   color: hsl(var(--text-light));
   position: absolute;
   bottom: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   width: 100%;
   background-color: hsl(var(--main-clr) / 0.9);
   padding: 0.5em;
@@ -71,7 +73,7 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 0.2rem;
+  border-radius: 5px;
   user-select: none;
 }
 
