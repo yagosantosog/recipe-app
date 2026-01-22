@@ -29,6 +29,20 @@ const isLongTitle = computed(() => {
 </template>
 
 <style scoped>
+.recipeCard {
+  all: unset;
+  cursor: pointer;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 350px;
+  box-shadow: 0.2rem 0.2rem 0.5rem hsl(var(--shadow-clr));
+  background-color: transparent;
+  border-radius: 5px;
+  transition:
+    transform 0.4s,
+    brightness 0.4s,
+    box-shadow 0.4s;
+}
 .recipeCard__title {
   color: hsl(var(--text-light));
   position: absolute;
@@ -45,22 +59,6 @@ const isLongTitle = computed(() => {
 h2 {
   font-size: var(--step--1);
   margin: 0;
-}
-
-.recipeCard {
-  all: unset;
-  cursor: pointer;
-  position: relative;
-  aspect-ratio: 1 / 1;
-  max-width: 350px;
-  margin-block: 2rem;
-  box-shadow: 0.2rem 0.2rem 0.5rem hsl(var(--shadow-clr));
-  background-color: transparent;
-  border-radius: 5px;
-  transition:
-    transform 0.4s,
-    brightness 0.4s,
-    box-shadow 0.4s;
 }
 
 .recipeCard:hover {
