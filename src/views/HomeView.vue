@@ -64,12 +64,6 @@ button:hover {
   box-shadow: 0.3rem 0.3rem 0.5rem hsl(var(--shadow-clr));
 }
 
-.cta {
-  max-width: 70ch;
-  margin-inline: auto;
-  padding: 2em;
-}
-
 @media (min-width: 720px) {
   main {
     flex-direction: row;
