@@ -1,46 +1,29 @@
 <script setup>
 import MealCard from '@/components/recipe/MealCard.vue'
-import { ref, onMounted } from 'vue'
+import { useMeals } from '@/composables/useMeals'
+import { onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-const data = ref(null)
+const { meals, loading, fetchRandomMeals } = useMeals()
+const randomMeal = computed(() => meals.value[Math.floor(Math.random() * meals.value.length)])
 const router = useRouter()
 
-const fetchRandomData = () => {
-  const letters = 'l,p,m,f,s,k,t,b,g,j,e,h,j,n'
-  const lettersArray = letters.split(',')
-  const randomLetter = lettersArray[Math.floor(Math.random() * lettersArray.length)]
-  fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${randomLetter}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP Error! Status ${response.status}`)
-      }
-      return response.json()
-    })
-    .then((responseData) => {
-      data.value = responseData.meals[Math.floor(Math.random() * responseData.meals.length)]
-    })
-    .catch((error) => {
-      console.error(`Error fetching data: ${error}`)
-    })
-}
-
 onMounted(() => {
-  fetchRandomData()
+  fetchRandomMeals()
 })
 </script>
 
 <template>
   <div class="container">
-    <div class="searchRecipes__loading" v-if="data === null">
+    <div class="searchRecipes__loading" v-if="loading">
       <h2>Loading...</h2>
     </div>
-    <main v-else-if="data">
+    <main v-else-if="randomMeal">
       <MealCard
-        :id="data.idMeal"
-        :title="data.strMeal"
-        :image="data.strMealThumb"
-        :ytLink="data.strYoutube"
+        :id="randomMeal.idMeal"
+        :title="randomMeal.strMeal"
+        :image="randomMeal.strMealThumb"
+        :ytLink="randomMeal.strYoutube"
       />
       <div class="cta">
         <h1>Looking for a delicious recipe?</h1>
