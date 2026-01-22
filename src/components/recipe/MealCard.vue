@@ -54,16 +54,19 @@ h2 {
   aspect-ratio: 1 / 1;
   max-width: 350px;
   margin-block: 2rem;
-  box-shadow: 3px 5px 3px hsl(var(--shadow-clr));
+  box-shadow: 0.2rem 0.2rem 0.5rem hsl(var(--shadow-clr));
   background-color: transparent;
   border-radius: 5px;
-  transition: translateY 10ms;
+  transition:
+    transform 0.4s,
+    brightness 0.4s,
+    box-shadow 0.4s;
 }
 
 .recipeCard:hover {
   filter: brightness(95%);
   transform: scale(1.03);
-  box-shadow: 4px 6px 4px hsl(var(--shadow-clr));
+  box-shadow: 0.3rem 0.3rem 0.5rem hsl(var(--shadow-clr));
 }
 
 img {
