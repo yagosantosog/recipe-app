@@ -153,7 +153,7 @@ select {
 .searchRecipes__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2.5rem;
-  align-items: stretch;
+  gap: 2rem;
+  place-items: center;
 }
 </style>
