@@ -1,6 +1,5 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import YoutubeButton from '@/components/ui/YoutubeButton.vue'
 import { computed } from 'vue'
 
 const router = useRouter()
@@ -14,26 +13,19 @@ const props = defineProps({
 
 const isLongTitle = computed(() => {
   const words = props.title.split(' ')
-  return words.length > 4
+  return words.length > 7
 })
 </script>
 
 <template>
-  <div class="recipeCard">
+  <button @click="router.push(`/recipeDetails/${id}`)" class="recipeCard">
     <div class="recipeCard__title">
       <h2 :title="title">
-        {{ !isLongTitle ? title : `${title.split(' ').slice(0, 4).join(' ')}...` }}
+        {{ !isLongTitle ? title : `${title.split(' ').slice(0, 7).join(' ')}...` }}
       </h2>
-      <div class="recipeCard__buttons">
-        <YoutubeButton :ytLink="ytLink" /><i
-          @click="router.push(`/recipeDetails/${id}`)"
-          class="bx bx-right-arrow-alt"
-        ></i>
-      </div>
     </div>
-
     <img :src="image" :alt="title" />
-  </div>
+  </button>
 </template>
 
 <style scoped>
@@ -44,17 +36,10 @@ const isLongTitle = computed(() => {
   width: 100%;
   background-color: hsl(var(--main-clr) / 0.9);
   padding: 0.5em;
-  border-radius: 0.2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.2em;
-}
-
-.recipeCard__buttons {
-  display: flex;
-  align-items: center;
-  gap: 1em;
 }
 
 h2 {
@@ -62,29 +47,23 @@ h2 {
   margin: 0;
 }
 
-i {
-  cursor: pointer;
-  font-size: var(--step-2);
-  transition:
-    transform 0.4s,
-    background 0.4s;
-  border: 1px solid hsl(var(--text-light));
-  border-radius: 50%;
-}
-
-i:hover {
-  transform: scale(1.08);
-  background-color: hsl(var(--text-light) / 0.1);
-}
-
 .recipeCard {
+  all: unset;
+  cursor: pointer;
   position: relative;
   aspect-ratio: 1 / 1;
-  max-width: 20rem;
+  max-width: 350px;
   margin-block: 2rem;
-  box-shadow: 0.4rem 0.6rem 0.4rem hsl(var(--shadow-clr));
+  box-shadow: 3px 5px 3px hsl(var(--shadow-clr));
   background-color: transparent;
-  border-radius: 0.2rem;
+  border-radius: 5px;
+  transition: translateY 10ms;
+}
+
+.recipeCard:hover {
+  filter: brightness(95%);
+  transform: scale(1.03);
+  box-shadow: 4px 6px 4px hsl(var(--shadow-clr));
 }
 
 img {
