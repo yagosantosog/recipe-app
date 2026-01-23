@@ -59,10 +59,6 @@ const isLongTitle = computed(() => {
   width: 100%;
   background-color: hsl(var(--main-clr) / 0.9);
   padding: 0.5em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.2em;
 }
 
 h2 {
@@ -81,11 +77,5 @@ img {
 
 img.loaded {
   opacity: 1;
-}
-
-@media (min-width: 85rem) {
-  .recipeCard {
-    min-width: 32%;
-  }
 }
 </style>
