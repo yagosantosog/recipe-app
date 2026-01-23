@@ -41,7 +41,7 @@ main {
   flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
-  column-gap: 2rem;
+  gap: 2rem;
 }
 
 .cta-button {
