@@ -1,15 +1,16 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const router = useRouter()
 
 const props = defineProps({
   id: String,
   title: String,
-  image: String,
-  ytLink: String
+  image: String
 })
+
+const isImageLoaded = ref(false)
 
 const isLongTitle = computed(() => {
   const words = props.title.split(' ')
@@ -24,7 +25,14 @@ const isLongTitle = computed(() => {
         {{ !isLongTitle ? title : `${title.split(' ').slice(0, 7).join(' ')}...` }}
       </h2>
     </div>
-    <img :src="image" :alt="title" />
+    <img
+      :class="{ loaded: isImageLoaded }"
+      :src="image"
+      :alt="title"
+      decoding="async"
+      loading="lazy"
+      @load="isImageLoaded = true"
+    />
   </button>
 </template>
 
@@ -34,21 +42,21 @@ const isLongTitle = computed(() => {
   cursor: pointer;
   position: relative;
   aspect-ratio: 1 / 1;
+  background-color: hsl(var(--main-clr) / 0.15);
   max-width: 350px;
   box-shadow: 0.2rem 0.2rem 0.5rem hsl(var(--shadow-clr));
-  background-color: transparent;
   border-radius: 5px;
-  transition:
-    transform 0.4s,
-    brightness 0.4s,
-    box-shadow 0.4s;
+  overflow: hidden;
+}
+.recipeCard:hover {
+  filter: brightness(95%);
+  transform: scale(1.03);
+  box-shadow: 0.3rem 0.3rem 0.5rem hsl(var(--shadow-clr));
 }
 .recipeCard__title {
   color: hsl(var(--text-light));
   position: absolute;
   bottom: 0;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   width: 100%;
   background-color: hsl(var(--main-clr) / 0.9);
   padding: 0.5em;
@@ -63,18 +71,17 @@ h2 {
   margin: 0;
 }
 
-.recipeCard:hover {
-  filter: brightness(95%);
-  transform: scale(1.03);
-  box-shadow: 0.3rem 0.3rem 0.5rem hsl(var(--shadow-clr));
-}
-
 img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
   user-select: none;
+}
+
+img.loaded {
+  opacity: 1;
 }
 
 @media (min-width: 85rem) {
