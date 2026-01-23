@@ -29,7 +29,7 @@ onMounted(() => {
         <h1>Looking for a delicious recipe?</h1>
         <p>Discover new recipes right now! Search by recipes and find amazing dishes to try out.</p>
         <p>Unleash your culinary creativity and be amazed by what you can cook today!</p>
-        <button @click="router.push('/searchRecipes')">Start Exploring!</button>
+        <button class="cta-button" @click="router.push('/searchRecipes')">Start Exploring!</button>
       </div>
     </main>
   </div>
@@ -44,7 +44,7 @@ main {
   column-gap: 2rem;
 }
 
-button {
+.cta-button {
   font-size: var(--step-0);
   background-color: hsl(var(--main-clr));
   padding: 0.5em 1em;
@@ -58,7 +58,7 @@ button {
   box-shadow: 0.2rem 0.2rem 0.5rem hsl(var(--shadow-clr));
 }
 
-button:hover {
+.cta-button:hover {
   filter: brightness(95%);
   transform: scale(1.05);
   box-shadow: 0.3rem 0.3rem 0.5rem hsl(var(--shadow-clr));

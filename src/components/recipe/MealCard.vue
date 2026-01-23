@@ -38,7 +38,6 @@ const isLongTitle = computed(() => {
 
 <style scoped>
 .recipeCard {
-  all: unset;
   cursor: pointer;
   position: relative;
   aspect-ratio: 1 / 1;
