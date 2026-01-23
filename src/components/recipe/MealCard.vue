@@ -46,6 +46,10 @@ const isLongTitle = computed(() => {
   box-shadow: 0.2rem 0.2rem 0.5rem hsl(var(--shadow-clr));
   border-radius: 5px;
   overflow: hidden;
+  transition:
+    transform 0.4s,
+    brightness 0.4s,
+    box-shadow 0.4s;
 }
 .recipeCard:hover {
   filter: brightness(95%);
