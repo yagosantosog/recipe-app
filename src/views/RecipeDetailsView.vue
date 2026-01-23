@@ -38,11 +38,7 @@ onMounted(async () => {
           allowfullscreen
         ></iframe>
       </section>
-      <section class="recipeDetails__preparation">
-        <h2>Preparation Method</h2>
-        <div class="recipeDetails__instructions" v-html="instructions"></div>
-        <p v-if="hasArea">Area: {{ meal.strArea }}</p>
-      </section>
+
       <section class="recipeDetails__ingredients">
         <ul>
           <h2>Ingredients</h2>
@@ -52,6 +48,11 @@ onMounted(async () => {
             </li>
           </template>
         </ul>
+      </section>
+      <section class="recipeDetails__preparation">
+        <h2>Preparation Method</h2>
+        <div class="recipeDetails__instructions" v-html="instructions"></div>
+        <p v-if="hasArea">Area: {{ meal.strArea }}</p>
       </section>
     </div>
   </main>
