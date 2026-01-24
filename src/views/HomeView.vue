@@ -140,6 +140,7 @@ onMounted(() => {
 @media (min-width: 720px) {
   .hero {
     flex-direction: row;
+    justify-content: space-between;
   }
 }
 </style>
