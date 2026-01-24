@@ -19,7 +19,7 @@ onMounted(() => {
       <h2>Loading...</h2>
     </div>
     <main v-else-if="randomMeal">
-      <div class="hero">
+      <section class="hero section-margin">
         <MealCard
           :id="randomMeal.idMeal"
           :title="randomMeal.strMeal"
@@ -36,8 +36,8 @@ onMounted(() => {
             Start Exploring!
           </button>
         </div>
-      </div>
-      <section class="how-it-works">
+      </section>
+      <section class="how-it-works section-margin">
         <h2 class="section-title">How it works</h2>
 
         <div class="steps">
@@ -60,7 +60,7 @@ onMounted(() => {
           </div>
         </div>
       </section>
-      <section class="final-cta">
+      <section class="final-cta section-margin">
         <h2>Ready to cook something amazing?</h2>
         <button class="cta-button" @click="router.push('/searchRecipes')">Browse Recipes</button>
       </section>
@@ -75,7 +75,6 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   min-height: 70dvh;
-  margin-bottom: 2rem;
   gap: 2rem;
 }
 
@@ -101,7 +100,6 @@ onMounted(() => {
 
 .how-it-works {
   text-align: center;
-  margin-bottom: 5rem;
 }
 
 .steps {
@@ -133,7 +131,6 @@ onMounted(() => {
   padding: 3rem 1rem;
   background-color: hsl(var(--main-clr) / 0.1);
   border-radius: 10px;
-  margin-bottom: 5rem;
 }
 
 .final-cta:hover {

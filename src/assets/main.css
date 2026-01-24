@@ -82,3 +82,7 @@ button {
   margin-inline: auto;
   padding-top: 2rem;
 }
+
+.section-margin {
+  margin-bottom: 5rem;
+}
