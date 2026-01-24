@@ -18,7 +18,7 @@ onMounted(() => {
     <div class="searchRecipes__loading" v-if="loading">
       <h2>Loading...</h2>
     </div>
-    <main v-else-if="randomMeal">
+    <div v-else-if="randomMeal">
       <section class="hero section-margin">
         <MealCard
           :id="randomMeal.idMeal"
@@ -64,7 +64,7 @@ onMounted(() => {
         <h2>Ready to cook something amazing?</h2>
         <button class="cta-button" @click="router.push('/searchRecipes')">Browse Recipes</button>
       </section>
-    </main>
+    </div>
   </div>
 </template>
 
