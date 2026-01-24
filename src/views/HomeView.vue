@@ -19,28 +19,63 @@ onMounted(() => {
       <h2>Loading...</h2>
     </div>
     <main v-else-if="randomMeal">
-      <MealCard
-        :id="randomMeal.idMeal"
-        :title="randomMeal.strMeal"
-        :image="randomMeal.strMealThumb"
-        :ytLink="randomMeal.strYoutube"
-      />
-      <div class="cta">
-        <h1>Looking for a delicious recipe?</h1>
-        <p>Discover new recipes right now! Search by recipes and find amazing dishes to try out.</p>
-        <p>Unleash your culinary creativity and be amazed by what you can cook today!</p>
-        <button class="cta-button" @click="router.push('/searchRecipes')">Start Exploring!</button>
+      <div class="hero">
+        <MealCard
+          :id="randomMeal.idMeal"
+          :title="randomMeal.strMeal"
+          :image="randomMeal.strMealThumb"
+          :ytLink="randomMeal.strYoutube"
+        />
+        <div class="cta">
+          <h1>Looking for a delicious recipe?</h1>
+          <p>
+            Discover new recipes right now! Search by recipes and find amazing dishes to try out.
+          </p>
+          <p>Unleash your culinary creativity and be amazed by what you can cook today!</p>
+          <button class="cta-button" @click="router.push('/searchRecipes')">
+            Start Exploring!
+          </button>
+        </div>
       </div>
+      <section class="how-it-works">
+        <h2 class="section-title">How it works</h2>
+
+        <div class="steps">
+          <div class="step">
+            <span>1</span>
+            <h3>Search</h3>
+            <p>Find recipes by name or category.</p>
+          </div>
+
+          <div class="step">
+            <span>2</span>
+            <h3>Choose</h3>
+            <p>Select a recipe that matches your taste.</p>
+          </div>
+
+          <div class="step">
+            <span>3</span>
+            <h3>Cook</h3>
+            <p>Follow the instructions and enjoy your meal.</p>
+          </div>
+        </div>
+      </section>
+      <section class="final-cta">
+        <h2>Ready to cook something amazing?</h2>
+        <button class="cta-button" @click="router.push('/searchRecipes')">Browse Recipes</button>
+      </section>
     </main>
   </div>
 </template>
 
 <style scoped>
-main {
+.hero {
   display: flex;
   flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
+  min-height: 70dvh;
+  margin-bottom: 2rem;
   gap: 2rem;
 }
 
@@ -64,8 +99,49 @@ main {
   box-shadow: 0.3rem 0.3rem 0.5rem hsl(var(--shadow-clr));
 }
 
+.how-it-works {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.step {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: hsl(var(--main-clr) / 0.08);
+  transition: background 0.3s;
+}
+
+.step:hover {
+  background-color: hsl(var(--main-clr) / 0.15);
+}
+
+.step span {
+  display: inline-block;
+  font-size: var(--step-1);
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.final-cta {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: hsl(var(--main-clr) / 0.1);
+  border-radius: 10px;
+  margin-bottom: 5rem;
+}
+
+.final-cta:hover {
+  background-color: hsl(var(--main-clr) / 0.15);
+}
+
 @media (min-width: 720px) {
-  main {
+  .hero {
     flex-direction: row;
   }
 }
