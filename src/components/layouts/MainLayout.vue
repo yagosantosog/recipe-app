@@ -10,7 +10,7 @@ const router = useRouter()
       </button>
     </div>
   </header>
-  <main><slot /></main>
+  <main class="wrapper"><slot /></main>
   <footer>
     <small>Created by</small>
     <a href="https://github.com/yagosantosog/recipe-app" target="_blank">
@@ -24,6 +24,10 @@ const router = useRouter()
   </footer>
 </template>
 <style scoped>
+.wrapper {
+  min-height: 100dvh;
+}
+
 .header__container img {
   width: 150px;
   max-width: 100%;
