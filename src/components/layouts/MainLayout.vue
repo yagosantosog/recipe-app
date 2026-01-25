@@ -1,25 +1,29 @@
 <script setup>
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { RouterLink } from 'vue-router'
 </script>
 <template>
   <header>
-    <div class="header__container container">
-      <button @click="router.push('/')" class="logo">
+    <nav class="header__container container" aria-label="Main navigation">
+      <RouterLink to="/" class="logo" aria-label="Go to home page">
         <img src="../../assets/logo.webp" alt="logo" />
-      </button>
-    </div>
+      </RouterLink>
+    </nav>
   </header>
   <main class="wrapper"><slot /></main>
   <footer>
     <small>Created by</small>
-    <a href="https://github.com/yagosantosog/recipe-app" target="_blank">
+    <a
+      href="https://github.com/yagosantosog/recipe-app"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Github link for this project"
+    >
       <img
         src="https://avatars.githubusercontent.com/u/94266179?v=4&size=64"
-        alt="profile picture"
+        alt="Profile picture of yagosantosog"
       />
-      <p>yagosantosog</p>
-      <i class="fa-brands fa-github"></i>
+      <span>yagosantosog</span>
+      <i class="fa-brands fa-github" aria-hidden="true"></i>
     </a>
   </footer>
 </template>
