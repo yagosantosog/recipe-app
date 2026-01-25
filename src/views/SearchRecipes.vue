@@ -40,13 +40,13 @@ watch(selectedCategory, (value) => {
 </script>
 
 <template>
-  <main>
+  <section class="searchRecipes">
     <div class="searchRecipes__container">
-      <div class="searchRecipes__container-inputs">
-        <input v-model.trim="search" placeholder="Search for recipes" />
+      <form class="searchRecipes__container-inputs" role="search" @submit.prevent>
+        <label for="search" class="sr-only">Search recipes by name</label>
+        <input id="search" type="search" v-model.trim="search" placeholder="Search for recipes" />
 
         <label for="categories">Search by category:</label>
-
         <select id="categories" v-model="selectedCategory">
           <option value="">All</option>
           <option
@@ -57,32 +57,32 @@ watch(selectedCategory, (value) => {
             {{ category.strCategory }}
           </option>
         </select>
-      </div>
+      </form>
 
-      <div v-if="loading" class="searchRecipes__loading">
-        <h2>Loading...</h2>
-      </div>
+      <section v-if="loading" class="searchRecipes__loading" aria-busy="true">
+        <p role="status">Loading recipes...</p>
+      </section>
 
-      <div v-else-if="error" class="searchRecipes__loading">
-        <h2>Something went wrong</h2>
-      </div>
+      <section v-else-if="error" class="searchRecipes__loading" role="alert">
+        <p>Something went wrong. Please try again.</p>
+      </section>
 
-      <div v-else-if="!meals.length" class="searchRecipes__loading">
-        <h2>No recipes found</h2>
-      </div>
+      <section v-else-if="!meals.length" class="searchRecipes__loading">
+        <p>No recipes found.</p>
+      </section>
 
-      <div v-else class="searchRecipes__grid">
-        <MealCard
-          v-for="recipe in meals"
-          :key="recipe.idMeal"
-          :id="recipe.idMeal"
-          :title="recipe.strMeal"
-          :image="recipe.strMealThumb"
-          :ytLink="recipe.strYoutube"
-        />
-      </div>
+      <ul v-else class="searchRecipes__grid">
+        <li v-for="recipe in meals" :key="recipe.idMeal">
+          <MealCard
+            :id="recipe.idMeal"
+            :title="recipe.strMeal"
+            :image="recipe.strMealThumb"
+            :ytLink="recipe.strYoutube"
+          />
+        </li>
+      </ul>
     </div>
-  </main>
+  </section>
 </template>
 
 <style scoped>
@@ -151,6 +151,7 @@ select {
 }
 
 .searchRecipes__grid {
+  list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
