@@ -61,7 +61,13 @@ onMounted(() => {
       </section>
       <section class="final-cta section-margin">
         <h2>Ready to cook something amazing?</h2>
-        <RouterLink class="cta-button" to="/searchRecipes">Browse Recipes</RouterLink>
+        <p>
+          Browse hundreds of recipes from different cuisines, discover new flavors, and turn simple
+          ingredients into unforgettable meals.
+        </p>
+        <RouterLink class="cta-button cta-button--highlight" to="/searchRecipes">
+          Browse Recipes
+        </RouterLink>
       </section>
     </div>
   </div>
@@ -134,14 +140,29 @@ onMounted(() => {
 }
 
 .final-cta {
+  position: relative;
+  overflow: hidden;
   text-align: center;
-  padding: 3rem 1rem;
-  background-color: hsl(var(--main-clr) / 0.1);
-  border-radius: 10px;
+  padding: clamp(3rem, 6vw, 5rem) 1.5rem;
+  background: linear-gradient(135deg, hsl(var(--main-clr) / 0.12), hsl(var(--main-clr) / 0.05));
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  gap: 1.5rem;
 }
 
-.final-cta:hover {
-  background-color: hsl(var(--main-clr) / 0.15);
+.final-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, hsl(var(--main-clr) / 0.2), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+
+.final-cta:hover::after {
+  opacity: 1;
 }
 
 @media (min-width: 720px) {

@@ -84,7 +84,7 @@ button {
 }
 
 .section-margin {
-  margin-bottom: 4rem;
+  margin-bottom: clamp(4rem, 8vw, 6rem);
 }
 
 .sr-only {
