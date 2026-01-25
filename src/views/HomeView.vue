@@ -65,9 +65,7 @@ onMounted(() => {
           Browse hundreds of recipes from different cuisines, discover new flavors, and turn simple
           ingredients into unforgettable meals.
         </p>
-        <RouterLink class="cta-button cta-button--highlight" to="/searchRecipes">
-          Browse Recipes
-        </RouterLink>
+        <RouterLink class="cta-button" to="/searchRecipes"> Browse Recipes </RouterLink>
       </section>
     </div>
   </div>
