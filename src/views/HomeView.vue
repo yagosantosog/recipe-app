@@ -2,11 +2,10 @@
 import MealCard from '@/components/recipe/MealCard.vue'
 import { useMeals } from '@/composables/useMeals'
 import { onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { RouterLink } from 'vue-router'
 
 const { meals, loading, fetchRandomMeals } = useMeals()
 const randomMeal = computed(() => meals.value[Math.floor(Math.random() * meals.value.length)])
-const router = useRouter()
 
 onMounted(() => {
   fetchRandomMeals()
@@ -15,9 +14,14 @@ onMounted(() => {
 
 <template>
   <div class="container">
-    <div class="searchRecipes__loading" v-if="loading">
-      <h2>Loading...</h2>
-    </div>
+    <section
+      class="searchRecipes__loading"
+      v-if="loading"
+      aria-busy="true"
+      aria-describedby="loading-status"
+    >
+      <p id="loading-status" role="status">Loading...</p>
+    </section>
     <div v-else-if="randomMeal">
       <section class="hero section-margin">
         <MealCard
@@ -26,43 +30,38 @@ onMounted(() => {
           :image="randomMeal.strMealThumb"
           :ytLink="randomMeal.strYoutube"
         />
-        <div class="cta">
+        <header class="cta">
           <h1>Looking for a delicious recipe?</h1>
           <p>
             Discover new recipes right now! Search by recipes and find amazing dishes to try out.
           </p>
           <p>Unleash your culinary creativity and be amazed by what you can cook today!</p>
-          <button class="cta-button" @click="router.push('/searchRecipes')">
-            Start Exploring!
-          </button>
-        </div>
+          <RouterLink class="cta-button" to="/searchRecipes"> Start Exploring! </RouterLink>
+        </header>
       </section>
       <section class="how-it-works section-margin">
         <h2 class="section-title">How it works</h2>
 
-        <div class="steps">
-          <div class="step">
-            <span>1</span>
+        <ol class="steps">
+          <li class="step">
             <h3>Search</h3>
             <p>Find recipes by name or category.</p>
-          </div>
+          </li>
 
-          <div class="step">
-            <span>2</span>
+          <li class="step">
             <h3>Choose</h3>
             <p>Select a recipe that matches your taste.</p>
-          </div>
+          </li>
 
-          <div class="step">
-            <span>3</span>
+          <li class="step">
             <h3>Cook</h3>
             <p>Follow the instructions and enjoy your meal.</p>
-          </div>
-        </div>
+          </li>
+        </ol>
       </section>
       <section class="final-cta section-margin">
         <h2>Ready to cook something amazing?</h2>
-        <button class="cta-button" @click="router.push('/searchRecipes')">Browse Recipes</button>
+        <RouterLink class="cta-button" to="/searchRecipes">Browse Recipes</RouterLink>
       </section>
     </div>
   </div>
@@ -79,6 +78,8 @@ onMounted(() => {
 }
 
 .cta-button {
+  display: inline-block;
+  text-decoration: none;
   font-size: var(--step-0);
   background-color: hsl(var(--main-clr));
   padding: 0.5em 1em;
@@ -103,12 +104,16 @@ onMounted(() => {
 }
 
 .steps {
+  list-style: none;
+  counter-reset: step;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
 }
 
 .step {
+  counter-increment: step;
+  position: relative;
   padding: 1.5rem;
   border-radius: 8px;
   background-color: hsl(var(--main-clr) / 0.08);
@@ -119,11 +124,13 @@ onMounted(() => {
   background-color: hsl(var(--main-clr) / 0.15);
 }
 
-.step span {
+.step::before {
+  content: counter(step);
   display: inline-block;
   font-size: var(--step-1);
   font-weight: bold;
   margin-bottom: 0.5rem;
+  color: hsl(var(--main-clr));
 }
 
 .final-cta {
