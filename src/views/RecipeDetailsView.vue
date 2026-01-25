@@ -22,16 +22,17 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="container" v-if="meal">
-    <section class="recipeDetails__header">
+  <article class="container" v-if="meal">
+    <header class="recipeDetails__header">
       <h1>{{ meal.strMeal }}</h1>
       <YoutubeButton v-if="meal.strYoutube" :ytLink="meal.strYoutube" />
-    </section>
+    </header>
     <div class="recibeDetails_content">
-      <section v-if="meal.strYoutube" class="recipeDetails__video">
+      <section v-if="meal.strYoutube" class="recipeDetails__video" aria-labelledby="video-title">
+        <h2 id="video-title" class="sr-only">Recipe video</h2>
         <iframe
           :src="meal.strYoutube.replace('watch?v=', 'embed/')"
-          title="YouTube video player"
+          title="Recipe preparation video"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
@@ -40,11 +41,11 @@ onMounted(async () => {
       </section>
 
       <section class="recipeDetails__ingredients">
+        <h2>Ingredients</h2>
         <ul>
-          <h2>Ingredients</h2>
           <template v-for="(i, index) of new Array(20)">
             <li v-if="meal[`strIngredient${index}`]" :key="index">
-              {{ index + '. ' + meal[`strIngredient${index}`] }}
+              {{ meal[`strIngredient${index}`] }}
             </li>
           </template>
         </ul>
@@ -52,10 +53,10 @@ onMounted(async () => {
       <section class="recipeDetails__preparation">
         <h2>Preparation Method</h2>
         <div class="recipeDetails__instructions" v-html="instructions"></div>
-        <p v-if="hasArea">Area: {{ meal.strArea }}</p>
+        <p v-if="hasArea"><strong>Area:</strong> {{ meal.strArea }}</p>
       </section>
     </div>
-  </main>
+  </article>
 </template>
 
 <style scoped>
@@ -94,10 +95,6 @@ onMounted(async () => {
   aspect-ratio: 16/9;
   height: auto;
   border-radius: 5px;
-}
-
-ul {
-  list-style: none;
 }
 
 li {
