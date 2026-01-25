@@ -1,8 +1,6 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { computed, ref } from 'vue'
-
-const router = useRouter()
 
 const props = defineProps({
   id: String,
@@ -19,21 +17,28 @@ const isLongTitle = computed(() => {
 </script>
 
 <template>
-  <button @click="router.push(`/recipeDetails/${id}`)" class="recipeCard">
-    <div class="recipeCard__title">
-      <h2 :title="title">
-        {{ !isLongTitle ? title : `${title.split(' ').slice(0, 7).join(' ')}...` }}
-      </h2>
-    </div>
-    <img
-      :class="{ loaded: isImageLoaded }"
-      :src="image"
-      :alt="title"
-      decoding="async"
-      loading="lazy"
-      @load="isImageLoaded = true"
-    />
-  </button>
+  <article class="recipeCard">
+    <RouterLink
+      :to="`/recipeDetails/${id}`"
+      class="recipeCard__link"
+      :aria-label="`View recipe details for ${title}`"
+    >
+      <header class="recipeCard__title">
+        <h2 :title="title">
+          {{ !isLongTitle ? title : `${title.split(' ').slice(0, 7).join(' ')}...` }}
+        </h2>
+      </header>
+
+      <img
+        :class="{ loaded: isImageLoaded }"
+        :src="image"
+        :alt="title"
+        decoding="async"
+        loading="lazy"
+        @load="isImageLoaded = true"
+      />
+    </RouterLink>
+  </article>
 </template>
 
 <style scoped>
