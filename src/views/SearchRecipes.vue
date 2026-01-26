@@ -1,10 +1,13 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import MealCard from '@/components/recipe/MealCard.vue'
 import { useMeals } from '@/composables/useMeals'
 
-const search = ref('')
-const selectedCategory = ref('')
+const route = useRoute()
+const router = useRouter()
+const search = ref(route.query.query ?? '')
+const selectedCategory = ref(route.query.category ?? '')
 
 const {
   meals,
@@ -18,25 +21,41 @@ const {
 } = useMeals()
 
 onMounted(() => {
-  fetchRandomMeals()
   fetchCategories()
+  if (search.value) {
+    searchMealsByName(search.value)
+  } else if (selectedCategory.value) {
+    fetchMealsByCategory(selectedCategory.value)
+  } else {
+    fetchRandomMeals()
+  }
 })
 
-watch(search, (value) => {
-  if (!value) {
-    fetchRandomMeals()
-    return
-  }
-  searchMealsByName(value)
+watch([search, selectedCategory], ([newSearch, newCategory]) => {
+  router.replace({
+    query: {
+      query: newSearch || undefined,
+      category: newCategory || undefined
+    }
+  })
 })
 
-watch(selectedCategory, (value) => {
-  if (!value) {
-    fetchRandomMeals()
-    return
-  }
-  fetchMealsByCategory(value)
-})
+watch(
+  () => route.query,
+  (query) => {
+    search.value = query.query ?? ''
+    selectedCategory.value = query.category ?? ''
+
+    if (search.value) {
+      searchMealsByName(search.value)
+    } else if (selectedCategory.value) {
+      fetchMealsByCategory(selectedCategory.value)
+    } else {
+      fetchRandomMeals()
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
