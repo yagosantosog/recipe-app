@@ -37,6 +37,11 @@ import { RouterLink } from 'vue-router'
   max-width: 100%;
 }
 
+.logo {
+  display: block;
+  max-width: fit-content;
+}
+
 footer {
   display: flex;
   flex-direction: column;
