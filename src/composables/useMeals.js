@@ -33,6 +33,12 @@ function useLocalCache(key, ttl = 1000 * 60 * 5) {
   return { get, set }
 }
 
+function filterMealsWithImage(meals) {
+  return meals.filter(
+    (meal) => typeof meal?.strMealThumb === 'string' && meal.strMealThumb.trim().length > 0
+  )
+}
+
 export function useMeals() {
   const meals = ref([])
   const categories = ref([])
@@ -60,8 +66,8 @@ export function useMeals() {
       const data = await response.json()
       const result = data.meals ?? []
 
-      meals.value = result
-      cache.set(result)
+      meals.value = filterMealsWithImage(result)
+      cache.set(meals.value)
     } catch (err) {
       error.value = err.message
       meals.value = []
