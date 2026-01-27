@@ -31,10 +31,14 @@ onMounted(async () => {
       <section v-if="meal.strYoutube" class="recipeDetails__video" aria-labelledby="video-title">
         <h2 id="video-title" class="sr-only">Recipe video</h2>
         <iframe
-          :src="meal.strYoutube.replace('watch?v=', 'embed/')"
+          :src="
+            meal.strYoutube
+              .replace('watch?v=', 'embed/')
+              .replace('youtube.com', 'youtube-nocookie.com')
+          "
           title="Recipe preparation video"
           frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allow="autoplay; encrypted-media; picture-in-picture"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
         ></iframe>
@@ -44,8 +48,8 @@ onMounted(async () => {
         <h2>Ingredients</h2>
         <ul>
           <template v-for="(i, index) of new Array(20)">
-            <li v-if="meal[`strIngredient${index}`]" :key="index">
-              {{ meal[`strIngredient${index}`] }}
+            <li v-if="meal[`strIngredient${index + 1}`]" :key="index">
+              {{ meal[`strIngredient${index + 1}`] }}
             </li>
           </template>
         </ul>
